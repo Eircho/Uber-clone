@@ -2,13 +2,16 @@ import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import tw from 'twrnc'
 import { Icon } from '@rneui/themed'
+import { useNavigation } from '@react-navigation/native'
 
 const NavOptions = () => {
+	const navigation = useNavigation();
+
 	const data = [
 		{
 			id: "123",
 			title: "Get a ride",
-			image: "https://links.papareact.com/3pn",
+			image: require("../assets/car.png"),
 			screen: "MapScreen"
 		}
 	]
@@ -18,11 +21,14 @@ const NavOptions = () => {
 			data={data}
 			keyExtractor={(item) => item.id}
 			renderItem={({item}) => (
-				<TouchableOpacity style={tw`bg-gray-300 pl-5 pb-5 w-50 m-2`}>
+				<TouchableOpacity 
+					style={tw`bg-gray-300 pl-5 pb-5 w-50 m-2`} 
+					onPress={() => navigation.navigate(item.screen)}
+				>
 					<View>
 						<Image 
 							source={item.image}
-							style={[tw`w-45 h-40`, {resizeMode: "contain"}]}
+							style={[tw`w-35 h-40`, {resizeMode: "contain"}]}
 						/>
 						<Text style={tw`pl-3 text-lg font-semibold`}>{item.title}</Text>
 						<Icon 

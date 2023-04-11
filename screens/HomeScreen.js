@@ -8,7 +8,7 @@ const HomeScreen = () => {
     <View style={tw`bg-red-300`}>
       <Image 
         style={[tw`w-35 h-35 ml-2`, {resizeMode: "contain"}]}
-        source={{uri: "https://links.papareact.com/gzs"}}
+        source={require("../assets/uber_logo.png")}
       />
       <NavOptions />
     </View>
@@ -16,5 +16,3 @@ const HomeScreen = () => {
 }
 
 export default HomeScreen
-
-const styles = StyleSheet.create({})

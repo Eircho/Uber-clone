@@ -1,26 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 import { Provider } from 'react-redux';
 import store from './store';
+import HomeScreen from './screens/HomeScreen';
+import { SafeAreaView } from 'react-native';
+import AndroidSafeArea from './styles/AndroidSafeArea';
+import tw from 'twrnc';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const App = () => {
   return(
     <Provider store={store}>
-      <View style={styles.container}>
-        <Text>Lets build!</Text>
-        <StatusBar style="auto" />
-      </View>
+      <SafeAreaProvider>
+        <SafeAreaView style={[tw`pl-5`, AndroidSafeArea]}>
+          <HomeScreen />
+        </SafeAreaView>
+      </SafeAreaProvider>
     </Provider>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default App;

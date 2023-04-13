@@ -22,7 +22,15 @@ const NavigateCard = () => {
 
   return (
     <SafeAreaView style={[tw`bg-white h-full`]}>
-			<Text style={tw`text-center py-5 text-3xl`}>Choose your destination</Text>
+			<View>
+				<TouchableOpacity 
+				style={tw`absolute top-3 left-5 p-3 rounded-full z-50`}
+				onPress={() => navigation.navigate("HomeScreen")}
+				>
+				<Icon name='chevron-left' type='fontawesome' />
+				</TouchableOpacity>
+				<Text style={tw`text-center py-5 text-xl`}>Choose your Destination</Text>
+			</View>
 			<View style={tw`border-t border-gray-200 flex-shrink`}>
 				<GooglePlacesAutocomplete
 					placeholder={destination ? destination.description : "Where to?"}

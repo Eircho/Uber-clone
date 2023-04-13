@@ -1,23 +1,27 @@
-import { View, Image } from 'react-native'
+import { Image, Text, View } from 'react-native'
 import React from 'react'
 import tw from 'twrnc';
 import NavOptions from '../components/NavOptions';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { GOOGLE_MAPS_APIKEY } from '@env'
-import { useDispatch } from 'react-redux'
-import { setOrigin, setDestination } from '../slices/navSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { setOrigin, setDestination, selectOrigin } from '../slices/navSlice'
+import { SafeAreaView } from 'react-native-safe-area-context';
+import NavFavourites from '../components/NavFavourites';
 
 const HomeScreen = () => {
   const dispatch = useDispatch()
+  const origin = useSelector(selectOrigin)
 
   return (
-    <View style={tw`bg-red-300`}>
+    <View style={tw`h-full bg-white`}>
+    <SafeAreaView>
       <Image 
         style={[tw`w-35 h-35 ml-2`, {resizeMode: "contain"}]}
         source={require("../assets/uber_logo.png")}
       />
       <GooglePlacesAutocomplete
-        placeholder='Where from?'
+        placeholder={origin ? origin.description : "Where from?"}
         nearbyPlacesAPI='GooglePlacesSearch'
         debounce={400}
         styles={{
@@ -47,6 +51,8 @@ const HomeScreen = () => {
         }}
       />
       <NavOptions />
+      <NavFavourites originOrDestination={"origin"}/>
+    </SafeAreaView>
     </View>
   )
 }

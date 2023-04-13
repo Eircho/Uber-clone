@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView, Text, View } from 'react-native'
+import { StyleSheet, SafeAreaView, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { GOOGLE_MAPS_APIKEY } from '@env'
@@ -7,6 +7,7 @@ import { selectDestination, setDestination } from '../slices/navSlice'
 import tw from 'twrnc';
 import { useNavigation } from '@react-navigation/native';
 import NavFavourites from '../components/NavFavourites';
+import { Icon } from '@rneui/themed';
 
 const NavigateCard = () => {
 	const dispatch = useDispatch()
@@ -41,6 +42,21 @@ const NavigateCard = () => {
 				/>
 			</View>
 			<NavFavourites originOrDestination={"destination"}/>
+
+			<View style={tw`flex-row justify-center py-5 mt-auto border-t border-gray-100`}>
+				<TouchableOpacity 
+					style={tw`bg-black flex-row flex w-24 px-3 py-3 rounded-full justify-evenly`}
+					onPress={() => {
+						if (destination) {
+							return navigation.navigate("RideOptionsCard")
+						}
+						return
+  					}}
+				>
+					<Icon name='car' type='font-awesome' color="white" size={16} />
+					<Text style={tw`text-white text-center`}>Rides</Text>
+				</TouchableOpacity>
+			</View>
     </SafeAreaView>
   )
 }

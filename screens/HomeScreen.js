@@ -1,5 +1,5 @@
 import { Image, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import tw from 'twrnc';
 import NavOptions from '../components/NavOptions';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
@@ -8,10 +8,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setOrigin, setDestination, selectOrigin } from '../slices/navSlice'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import NavFavourites from '../components/NavFavourites';
+import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
   const dispatch = useDispatch()
   const origin = useSelector(selectOrigin)
+  const navigation = useNavigation()
+
+  useEffect(() => {
+		navigation.navigate('MapScreen')
+    dispatch(setDestination(null))
+	}, [origin])
 
   return (
     <View style={tw`h-full bg-white`}>
@@ -39,8 +46,6 @@ const HomeScreen = () => {
             location: details.geometry.location,
             description: data.description
           }))
-
-          dispatch(setDestination(null))
         }}
 
         fetchDetails={true}

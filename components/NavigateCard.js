@@ -1,5 +1,5 @@
 import { StyleSheet, SafeAreaView, Text, View, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { GOOGLE_MAPS_APIKEY } from '@env'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,6 +14,12 @@ const NavigateCard = () => {
 	const destination = useSelector(selectDestination)
 	const navigation = useNavigation()
 
+	useEffect(() => {
+		if (destination) {
+			return navigation.navigate('RideOptionsCard')
+		}
+	}, [destination])
+
   return (
     <SafeAreaView style={[tw`bg-white h-full`]}>
 			<Text style={tw`text-center py-5 text-3xl`}>Choose your destination</Text>
@@ -24,6 +30,12 @@ const NavigateCard = () => {
 					debounce={400}
 					styles={styles}
 					enablePoweredByContainer={false}
+					fetchDetails={true}
+					returnKeyType={"search"}
+					query={{
+						key: GOOGLE_MAPS_APIKEY,
+						language: 'en',
+					}}
 
 					onPress={(data, details = null) => {
 						dispatch(setDestination({
@@ -33,12 +45,6 @@ const NavigateCard = () => {
 
 						navigation.navigate('RideOptionsCard')
 					}}
-					fetchDetails={true}
-					returnKeyType={"search"}
-					query={{
-						key: GOOGLE_MAPS_APIKEY,
-						language: 'en',
-					}}
 				/>
 			</View>
 			<NavFavourites originOrDestination={"destination"}/>
@@ -47,10 +53,7 @@ const NavigateCard = () => {
 				<TouchableOpacity 
 					style={tw`bg-black flex-row flex w-24 px-3 py-3 rounded-full justify-evenly`}
 					onPress={() => {
-						if (destination) {
-							return navigation.navigate("RideOptionsCard")
-						}
-						return
+						navigation.navigate('RideOptionsCard')
   					}}
 				>
 					<Icon name='car' type='font-awesome' color="white" size={16} />
